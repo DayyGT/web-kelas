@@ -698,3 +698,63 @@ body {
     height: 100%;
     object-fit: cover;
 }
+
+/* --- SETTINGAN KHUSUS DESKTOP (Biar tetap rapi) --- */
+.menu-toggle {
+    display: none; /* Sembunyi total di laptop/desktop */
+}
+
+/* --- SETTINGAN KHUSUS HP (Max width 768px) --- */
+@media (max-width: 768px) {
+    .navbar {
+        justify-content: space-between; /* Logo/Teks di kiri, Tombol di kanan */
+        padding: 15px 20px;
+        box-sizing: border-box; /* Anti bocor hitam di kanan */
+    }
+
+    /* Munculkan tombol garis tiga */
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 10000;
+    }
+
+    .bar {
+        width: 25px;
+        height: 3px;
+        background: white;
+        border-radius: 2px;
+    }
+
+    /* Ubah UL lama jadi menu melayang */
+    .navbar ul {
+        display: none; /* Sembunyi default di HP */
+        position: absolute;
+        top: 100%; /* Muncul tepat di bawah navbar */
+        left: 0;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.98); /* Navy dark sesuai tema lama kamu */
+        flex-direction: column;
+        gap: 0; /* Gap dihapus, diganti padding li */
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .navbar ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar ul li a {
+        display: block;
+        padding: 15px 0;
+        width: 100%;
+    }
+
+    /* Class ini akan dipicu oleh JavaScript */
+    .navbar ul.active {
+        display: flex; /* Muncul pas diklik */
+    }
+}
