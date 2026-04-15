@@ -270,3 +270,24 @@ document.addEventListener('keydown', function(e) {
 
 // Jalankan fungsi
 initGallery();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('mobile-menu');
+    const navList = document.querySelector('.navbar ul');
+
+    if (menuBtn) {
+        menuBtn.onclick = () => {
+            navList.classList.toggle('active');
+            
+            // Opsional: Animasi tombol jadi X
+            menuBtn.classList.toggle('is-active');
+        };
+    }
+    
+    // Klik link apa saja langsung tutup menu (biar gak ganggu)
+    document.querySelectorAll('.navbar ul li a').forEach(link => {
+        link.onclick = () => {
+            navList.classList.remove('active');
+        };
+    });
+});
