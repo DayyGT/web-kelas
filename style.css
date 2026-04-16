@@ -854,7 +854,7 @@ body {
 @media (max-width: 600px) {
     
     /* Judul XII RPL */
-    .hero p{ 
+     .hero h1 { 
         font-size: 12vw !important; /* Ukuran teks ngikutin lebar layar HP */
         line-height: 1.1;
         margin-bottom: 10px;
@@ -864,6 +864,7 @@ body {
     /* Teks Selamat Datang */
     .hero p{
         font-size: 3.5vw !important; /* Mengecil proporsional */
+        font-weight: 550;
         width: 90%; /* Supaya teks nggak kena pinggir layar */
         margin: 0 auto;
         letter-spacing: 1px;
