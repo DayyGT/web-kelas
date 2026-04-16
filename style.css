@@ -1,0 +1,956 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none;      /* IE 10 dan lebih baru */
+    user-select: none;          /* Standar (Chrome, Firefox, Opera) */
+    -webkit-touch-callout: none; /* Menonaktifkan menu popup di iOS */
+}
+
+body {
+    background: #000;
+    color: white;
+    overflow-x: hidden;
+}
+
+#canvas1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Pastikan Navbar tidak mendorong elemen di bawahnya */
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    padding:18px 0;
+
+    /* Kontras jelas di background putih */
+    background:rgba(15,23,42,0.92); /* dark navy */
+    color:#fff;
+
+    /* Biar premium */
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 12x 30px rgba(0,0,0,0.18);
+
+    z-index:9999;
+    transition:all .3s ease;
+}
+
+.navbar a{
+    text-decoration:none;
+    font-weight:600;
+    letter-spacing:1px;
+    padding:5px 16px;
+    transition:.3s ease;
+}
+
+
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+    gap: 50px;
+}
+
+
+
+/* Hover keren untuk menu tanpa menggeser teks */
+.navbar ul li a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+
+/* Efek garis bawah saat hover daripada menggeser teks */
+.navbar ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #a29bfe;
+    transition: 0.3s;
+}
+
+.navbar ul li a:hover::after {
+    width: 100%;
+}
+
+.navbar ul li a:hover {
+    color: #a29bfe;
+    text-shadow: 0 0 10px rgba(162, 155, 254, 0.8);
+}
+
+.content h1 {
+    font-size: clamp(5rem, 12vw, 9rem);
+    font-weight: 900;
+    letter-spacing: 20px;
+    padding-left: 16px;
+    color: white;
+    /* Glow di tepi teks */
+    filter: 
+        drop-shadow(0 0 5px rgba(248, 248, 248, 0.7))
+        drop-shadow(0 0 15px rgba(162, 155, 254, 0.4));
+    /* Animasi halus agar teks tidak kaku */
+    transition: transform 0.5s ease;
+}
+
+/* Hero Section harus punya z-index lebih rendah dari navbar */
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+ .hero p{
+        font-size: 3.5vw !important; /* Mengecil proporsional */
+        font-weight: 550;
+        width: 90%; /* Supaya teks nggak kena pinggir layar */
+        margin: 0 auto;
+        letter-spacing: 1px;
+    }
+    
+/* Background Foto di Folder img */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Menambahkan gradasi hitam transparan dari atas ke bawah */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 20%), 
+                url('hero.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.5); /* Gelapkan sedikit foto agar teks terbaca */
+    z-index: -2;
+}
+
+/* Glow pada teks XII RPL yang lebih dominan */
+/* Text muncul seperti mengetik dari kiri ke kanan */
+.fade-in-text{
+    font-size:1.2rem;
+    font-weight:300;
+    letter-spacing:4px;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:2px solid #fff;
+    animation:
+        typing 4s steps(40,end) forwards,
+        blink .7s infinite;
+}
+
+@keyframes typing{
+    from{
+        width:0;
+        opacity:0;
+    }
+    to{
+        width:100%;
+        opacity:2;
+    }
+}
+
+@keyframes blink{
+    50%{
+        border-color:transparent;
+    }
+}
+
+.teacher-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff; /* Background putih bersih sesuai gambar */
+    padding: 100px 20px;
+    color: #1a1a1a;
+}
+
+.teacher-container {
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap; /* Agar responsif di HP */
+}
+
+/* Styling Foto & Efek Glass */
+.teacher-image-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.glass-card img {
+    width: 350px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 30px;
+    display: block;
+}
+
+.badge {
+    position: absolute;
+    bottom: 30px;
+    right: -20px;
+    background: #1a1c2e;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Styling Info Teks */
+.teacher-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.sub-title {
+    color: #4a6cf7;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+}
+
+.main-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 10px 0 30px 0;
+    color: #1a1c2e;
+}
+
+.quote {
+    font-style: italic;
+    font-size: 1.4rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+.divider {
+    border: none;
+    border-top: 2px solid #f0f0f0;
+    margin-bottom: 30px;
+}
+
+.teacher-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1a1c2e;
+}
+
+.job-title {
+    color: #4a6cf7;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+}
+
+/* Responsif untuk layar HP */
+@media (max-width: 768px) {
+    .teacher-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .main-title { font-size: 2.5rem; }
+    .glass-card img { width: 100%; height: auto; }
+    .badge { right: 50%; transform: translateX(50%); bottom: -10px; }
+}
+
+.students-section {
+    padding: 100px 0;
+    background: #f8faff; /* Latar belakang cerah sedikit kebiruan */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Grid */
+.students-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-size: 3rem;
+    font-weight: 900;
+    font-style: italic;
+    color: #1a1c2e;
+    text-transform: uppercase;
+}
+
+.search-box input {
+    padding: 15px 25px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 300px;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Grid System */
+/* Untuk layar besar (Desktop) */
+/* --- Perbaikan Grid agar 5 kolom pas & responsif --- */
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Tetap 5 kolom */
+    gap: 20px; /* Jarak dikecilkan sedikit agar muat */
+    margin-top: 30px;
+}
+
+@media (max-width: 1100px) {
+    .students-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 900px) {
+    .students-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+    .students-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+}
+
+/* --- Perbaikan Card & Foto (Anti-Lonjong) --- */
+.student-card {
+    background: white;
+    padding: 15px;
+    border-radius: 20px; /* Radius dikecilkan sesuai proporsi baru */
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    overflow: hidden; /* Pastikan konten tidak meluap */
+}
+
+/* --- Box Foto --- */
+.image-box {
+    width: 100%;
+    aspect-ratio: 1 / 1.1; 
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    position: relative;
+    background: #ccc; /* Warna dasar jika foto belum muat */
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Efek Awal: Abu-abu */
+    filter: grayscale(100%);
+    transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+/* --- Overlay Instagram (Awalnya Benar-benar Transparan) --- */
+/* --- Overlay Instagram (Bagian yang Diperbaiki) --- */
+.ig-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* PENTING: Jangan gunakan background color apa pun (kosongkan) */
+    background: transparent; 
+    
+    /* Warna ikon Instagram (bisa diganti putih atau warna IG) */
+    color: white; 
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem; /* Ukuran ikon agak digedein biar kelihatan */
+    text-decoration: none;
+    
+    /* Efek Awal: Transparan total & Mengecil */
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.4s ease;
+    z-index: 2;
+    
+    /* Tambahkan drop-shadow pada ikon agar tetap terbaca jika foto profilnya putih */
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); 
+}
+
+/* --- LOGIKA HOVER YANG DIPERBAIKI (ANTI GELAP) --- */
+
+/* 1. Saat CARD disentuh: Foto profil langsung jadi warna asli (Anti Abu-abu) */
+.student-card:hover .image-box img {
+    filter: grayscale(0%);
+}
+
+/* 2. Saat MOUSE masuk tepat ke area FOTO: Munculkan ikon IG di tengah */
+.image-box:hover .ig-link {
+    opacity: 1; /* Hanya ikon yang muncul */
+    
+    /* JANGAN TAMBAHKAN BACKGROUND GELAP DI SINI */
+    /* background: rgba(0,0,0,0.5); <- Hapus/Komentari baris ini */
+    
+    transform: scale(1); /* Ikon membesar normal */
+}
+/* 2. Saat CARD disentuh: Card naik sedikit */
+.student-card:hover {
+    transform: translateY(-10px);
+}
+
+/* 3. Saat MOUSE masuk tepat ke area FOTO: Baru muncul box gelap transparan & ikon IG */
+
+
+.image-box:hover img {
+    transform: scale(1.05); /* Zoom tipis saat fokus ke foto */
+}
+
+/* --- Efek Hover & Klik Terintegrasi --- */
+/* Saat card di-hover: Area luar naik, area dalam zoom & berwarna */
+.student-card:hover {
+    transform: translateY(-10px); /* Naik sedikit */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+.student-card:hover img {
+    filter: grayscale(0%); /* Warna asli */
+    transform: scale(1.05); /* Zoom sedikit saja biar ga berlebihan */
+}
+
+/* Saat FOTO (image-box) di-hover: Munculkan overlay IG */
+.image-box:hover .ig-link {
+    opacity: 1;
+    transform: scale(1); /* Ikon membesar normal di tengah */
+}
+
+/* Sedikit interaksi saat ikon IG diklik */
+.ig-link:active {
+    transform: scale(0.9);
+}
+
+/* --- Styling Teks --- */
+.student-card h3 {
+    font-size: 1rem; /* Ukuran teks disesuaikan */
+    font-weight: 800;
+    color: #1a1c2e;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+}
+
+.student-card span {
+    font-size: 0.75rem;
+    color: #4a6cf7;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* --- GALLERY GRID & HEADER --- */
+.gallery-section { 
+    padding: 80px 0; 
+    background: #fff; 
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 kolom di desktop */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.gallery-item {
+    aspect-ratio: 1/1;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+.gallery-item img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: 0.5s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    z-index: 10;
+}
+
+.gallery-item:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.08);
+}
+
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 kolom di tablet */
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 kolom di HP */
+        gap: 10px;
+    }
+}
+
+/* ====================== PREMIUM LIGHTBOX FIXED ====================== */
+/* ====================== LIGHTBOX - VERSI SUPER GEDE ====================== */
+/* ====================== LIGHTBOX SUPER FULL SCREEN (Desktop + Mobile) ====================== */
+.lightbox-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; 
+    height: 100%;           /* full viewport height */
+    display: none;
+    flex-direction: column;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.98);
+    overflow: hidden;
+}
+
+.lightbox-bg {
+    position: absolute;
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: -1;
+}
+
+/* Header - lebih tipis */
+.lb-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 30;
+    flex-shrink: 0;
+}
+
+.lb-counter { 
+    font-size: 0.75rem; 
+    font-weight: 700px;
+    
+
+}
+
+.lb-separator {
+    margin: 0 10px;
+    opacity: 0.3; /* Dibuat agak samar biar fokus ke angka dan kelas */
+    font-weight: 300;
+}
+
+.lb-control-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.lb-control-btn:hover {
+    background: rgba(255,255,255,0.25);
+    color: #4a52f8;
+}
+
+/* Main Container - Full Screen */
+.lb-main-container {
+    flex: 1;
+    
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: px 120px;        /* sangat kecil */
+    background: #000;
+    overflow: hidden;
+}
+
+/* Navigasi tombol */
+.lb-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 253, 253, 0.25);
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 25;
+}
+
+.lb-nav-btn:hover {
+    background: rgba(255, 253, 253, 0.4);
+    color: #4a6cf7;
+}
+
+/* Tombol Prev (Kiri) */
+.lb-prev {
+    left: 15px; /* Semakin kecil nilainya, semakin mepet ke kiri */
+}
+
+/* Tombol Next (Kanan) */
+.lb-next {
+    right: 15px; /* Semakin kecil nilainya, semakin mepet ke kanan */
+}
+
+/* Tambahan: Biar di HP gak nutupin foto banget */
+@media (max-width: 600px) {
+    .lb-prev {
+        left: 5px;
+    }
+    .lb-next {
+        right: 5px;
+    }
+    .lb-nav-btn {
+        width: 40px; /* Di HP dikecilin dikit biar gak kegedean */
+        height: 40px;
+    }
+}
+
+/* Gambar Utama - SUPER FULL */
+.lb-image-wrapper {
+    width: 100%;
+    height: 100%;               /* full height container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#lbImage {
+    width: 100%;
+    height: 100%;
+    max-height: 80vh; /* Agar tidak kepotong thumbnail bawah */
+    object-fit: contain; /* Ini kuncinya agar foto Portrait tetap lebar maksimal tanpa gepeng */
+}
+
+.lb-image-content {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;        /* tidak potong, proporsional */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Footer Thumbnail */
+.lb-footer {
+    padding: 10px 0;
+    background: rgba(0, 0, 0, 0.9);
+    flex-shrink: 0;
+}
+
+.lb-thumbnail-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 8px 15px;
+    scrollbar-width: none;
+}
+
+.lb-thumbnail-container::-webkit-scrollbar { display: none; }
+
+.lb-thumbnail-item {
+    min-width: 78px;
+    height: 52px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.65;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    flex-shrink: 0;
+}
+
+.lb-thumbnail-item.active {
+    opacity: 1;
+    border-color: #4a6cf7;
+    transform: scale(1.08);
+}
+
+.lb-thumbnail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- SETTINGAN KHUSUS DESKTOP (Biar tetap rapi) --- */
+.menu-toggle {
+    display: none; /* Sembunyi total di laptop/desktop */
+}
+
+/* --- SETTINGAN KHUSUS HP (Max width 768px) --- */
+@media (max-width: 768px) {
+    .navbar {
+        justify-content: space-between; /* Logo/Teks di kiri, Tombol di kanan */
+        padding: 15px 20px;
+        box-sizing: border-box; /* Anti bocor hitam di kanan */
+    }
+
+    /* Munculkan tombol garis tiga */
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 10000;
+    }
+
+    .bar {
+        width: 25px;
+        height: 3px;
+        background: white;
+        border-radius: 2px;
+    }
+
+    /* Ubah UL lama jadi menu melayang */
+    .navbar ul {
+        display: none; /* Sembunyi default di HP */
+        position: absolute;
+        top: 100%; /* Muncul tepat di bawah navbar */
+        left: 0;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.98); /* Navy dark sesuai tema lama kamu */
+        flex-direction: column;
+        gap: 0; /* Gap dihapus, diganti padding li */
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .navbar ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar ul li a {
+        display: block;
+        padding: 15px 0;
+        width: 100%;
+    }
+
+    /* Class ini akan dipicu oleh JavaScript */
+    .navbar ul.active {
+        display: flex; /* Muncul pas diklik */
+    }
+}
+
+/* Container utama tombol angka */
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 40px auto;
+    max-width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.page-btn {
+    min-width: 40px; /* Gunakan min-width biar fleksibel */
+    height: 40px;
+    padding: 0 5px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #eee;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    flex-shrink: 0; /* Biar tombol gak gepeng saat layar sempit */
+}
+
+.page-btn.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+    border-radius: 50%; /* Bulat sempurna sesuai referensi */
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+}
+
+/* KHUSUS MOBILE */
+@media (max-width: 600px) {
+    #pagination {
+        gap: 5px; /* Jarak lebih rapat di HP */
+    }
+    
+    .page-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Navigasi Panah < dan > */
+.page-btn:not(.active) {
+    color: #888;
+    border: 1px solid #eee;
+}
+
+/* Efek Hover */
+.page-btn:hover:not(.active):not(:disabled) {
+    background-color: #f8fafc;
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+/* Jika tombol tidak bisa diklik */
+.page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Untuk layar HP (maksimal lebar 600px) */
+@media (max-width: 600px) {
+    
+    /* Judul XII RPL */
+    .hero h1 { 
+        font-size: 12vw !important; /* Ukuran teks ngikutin lebar layar HP */
+        line-height: 1.1;
+        margin-bottom: 10px;
+        white-space: nowrap; /* Biar tetap satu baris tapi mengecil */
+        padding-left: 20px;
+    }
+
+    /* Teks Selamat Datang */
+    .hero p{
+        font-size: 3.5vw !important; /* Mengecil proporsional */
+        font-weight: 550;
+        width: 100%; /* Supaya teks nggak kena pinggir layar */
+        margin: 0 auto;
+        letter-spacing: 1px;
+    }
+
+    /* Memastikan container tidak bocor ke kanan */
+    .hero-section {
+        padding: 0 15px;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 1200px) {
+    
+    /* Judul XII RPL */
+    .hero h1 { 
+        font-size: 12vw !important; /* Ukuran teks ngikutin lebar layar HP */
+        line-height: 1.1;
+        margin-bottom: 10px;
+        white-space: nowrap; /* Biar tetap satu baris tapi mengecil */
+        padding-left: 21.5px;
+    }
+
+    /* Teks Selamat Datang */
+    .hero p{
+        font-size: 3.5vw !important; /* Mengecil proporsional */
+        font-weight: 550;
+        width: 100%; /* Supaya teks nggak kena pinggir layar */
+        margin: 0 auto;
+        letter-spacing: 1px;
+    }
+
+    /* Memastikan container tidak bocor ke kanan */
+    .hero-section {
+        padding: 0 15px;
+        overflow: hidden;
+    }
+}
+
+/* Container Utama */
+.members-header {
+    display: flex;
+    justify-content: space-between; /* Desktop: Judul kiri, Search kanan */
+    align-items: center;
+    flex-wrap: wrap; /* Izinkan elemen turun ke bawah jika sempit */
+    gap: 20px;
+    padding: 0 5%;
+    margin-bottom: 30px;
+}
+
+/* Style Input Search */
+.search-input {
+    width: 300px; /* Lebar default di Laptop */
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+/* KHUSUS UNTUK HP */
+@media (max-width: 600px) {
+    .members-header {
+        flex-direction: column; /* Paksa susun vertikal (atas-bawah) */
+        align-items: flex-start; /* Rata kiri sesuai teks The Squad */
+        gap: 15px;
+    }
+
+    .search-input {
+        width: 100%; /* Search jadi selebar layar HP agar proporsional */
+        max-width: none;
+        box-sizing: border-box; /* Biar padding nggak nambah lebar */
+    }
+    
+    /* Hilangkan margin/padding yang bikin bocor ke samping */
+    .hero-section, .members-header {
+        overflow: hidden;
+    }
+}
